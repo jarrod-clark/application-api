@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CourtCase {
+  enteredDateTime             DateTime @default(now())
+  enteredBy                   String
+  guid                        String @id @default(uuid())
+  courtCaseNumber             String
+  defendantName               String
+  defendantDob                DateTime
+  leaNumber                   String
+  agent                       String
+  agency                      String
+  incidentDate                DateTime
+  arrestDate                  DateTime
+  incidentLocation            String
+  charges                     String[]
+  felonyWarrant               Boolean @default(false)
+  familyViolence              Boolean @default(false)
+  assignedOpener              String?
+  codefendant                 String[]
+  division                    String?
+  justiceReformAttorney       String?
+  tier                        Int?
+  tierReason                  String?
+  tierReasonOther             String?
+  pdm                         Boolean?
+  pdmReason                   String?
+  noPdmReason                 String?
+  pdmAttorney                 String?
+  fourZeroThree               Boolean?
+  fourZeroThreeCaseNumbers    String?
+  districtCourtNumber         String?
+  daNumber                    String?
+  fourZeroThreeAttorney       String?
+  courseOfAction              String?
+  diversion                   String?
+  diversionReason             String?
+  federalCharges              String?
+  notes                       String?
+  pvHold                      Boolean?
+  firearm                     Boolean?
+  reviewedBy                  String?
+  weekend                     Boolean?
+}

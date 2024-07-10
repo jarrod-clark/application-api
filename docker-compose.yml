@@ -1,0 +1,16 @@
+services:
+
+    postgres:
+        image: postgres:latest
+        restart: always
+        environment:
+            - POSTGRES_USER=user
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_DB=bridgeDB
+        volumes:
+            - postgres:/var/lib/docker/volumes
+        ports:
+            - '2112:5432'
+
+volumes:
+    postgres:
