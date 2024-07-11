@@ -26,11 +26,20 @@ export class BridgeController {
   }
   
   @Get(':by-date/:enteredDateTime')
-  async getCaseByDate(@Param('enteredDateTime') enteredDateTime: Date): Promise<CourtCase[]>{
+  async getCaseByDate(@Param('enteredDateTime') enteredDateTime: string): Promise<CourtCase[]>{
     try {    
       return await this.bridgeService.findAllByDate(enteredDateTime);
     } catch (e) {
       throw new Error(`Failed to fetch cases for ${enteredDateTime}: ${e.message}`);
+    }
+  }
+
+  @Get(':by-id/:guid')
+  async getCaseById(@Param('guid') guid: string): Promise<CourtCase>{
+    try{ 
+      return await this.bridgeService.findByCase(guid);
+    } catch(e) {
+      throw new Error(`Failed to fetch case for id ${guid}: ${e.message}`)
     }
   }
 }

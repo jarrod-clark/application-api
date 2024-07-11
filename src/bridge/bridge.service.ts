@@ -1,7 +1,7 @@
 import { Injectable, Param } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CourtCase } from '@prisma/client';
-import { startOfDay, endOfDay} from 'date-fns'
+import { startOfDay, endOfDay, parseISO} from 'date-fns'
 
 @Injectable()
 export class BridgeService {
@@ -34,8 +34,9 @@ export class BridgeService {
         }
     };
 
-    async findAllByDate(enteredDate: Date): Promise<CourtCase[]> {
+    async findAllByDate(dateString: string): Promise<CourtCase[]> {
         try {
+            const enteredDate = parseISO(dateString)
             const start = startOfDay(enteredDate);
             const end = endOfDay(enteredDate);
 
@@ -48,7 +49,21 @@ export class BridgeService {
                 },
             });
         } catch (e) {
-            throw new Error(`Failed to fetch cases for ${enteredDate}: ${e.message}`)
+            throw new Error(`Failed to fetch cases for ${dateString}: ${e.message}`)
         }
     }
+
+    async findByCase(id: string): Promise<CourtCase> {
+        try {
+            return this.prisma.courtCase.findUnique({
+                where: {
+                    guid: id
+                }
+            })
+        } catch (e) {
+            throw new Error(`Failed to fetch case for guid ${id}: ${e.message}`)
+        }
+    }
+
+    async 
 }
